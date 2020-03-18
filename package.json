@@ -11,6 +11,8 @@
   "dependencies": {
     "apollo-datasource-rest": "^0.8.0",
     "apollo-server": "^2.11.0",
+    "contentful": "^7.14.0",
+    "contentful-management": "^5.13.0",
     "dotenv": "^8.2.0",
     "graphql": "^14.6.0"
   }

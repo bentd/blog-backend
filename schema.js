@@ -41,6 +41,42 @@ const typeDefs = gql`
     home: Home
     testHome: Home
   }
+
+
+  input AssetMetadataInput {
+    type: String
+    linkType: String
+    id: String
+  }
+
+  input AssetInput {
+    sys: AssetMetadataInput
+  }
+
+  type Mutation {
+    updateHome(
+      title: String,
+      id: Int,
+      name: String,
+      heroNouns: [String],
+      greeting: String,
+      role: [String],
+      skills: [String],
+      university: [String],
+      degree: String,
+      graduationDate: Date,
+      hobbyLabel: String,
+      hobbyPhoto: AssetInput,
+      contactMessage: String,
+      contactEmail: String,
+      contactLabel1: String,
+      contactLink1: String,
+      contactLabel2: String,
+      contactLink2: String,
+      contactLabel3: String,
+      contactLink3: String
+    ) : Home
+  }
 `;
 
 module.exports = typeDefs;
