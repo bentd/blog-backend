@@ -53,29 +53,37 @@ const typeDefs = gql`
     sys: AssetMetadataInput
   }
 
+  input HomeInput {
+    title: String
+    id: Int
+    name: String
+    heroNouns: [String]
+    greeting: String
+    role: [String]
+    skills: [String]
+    university: [String]
+    degree: String
+    graduationDate: Date
+    hobbyLabel: String
+    hobbyPhoto: AssetInput
+    contactMessage: String
+    contactEmail: String
+    contactLabel1: String
+    contactLink1: String
+    contactLabel2: String
+    contactLink2: String
+    contactLabel3: String
+    contactLink3: String
+  }
+
+  type HomeUpdateResponse {
+    success: Boolean!
+    fields: Home
+  }
+
   type Mutation {
-    updateHome(
-      title: String,
-      id: Int,
-      name: String,
-      heroNouns: [String],
-      greeting: String,
-      role: [String],
-      skills: [String],
-      university: [String],
-      degree: String,
-      graduationDate: Date,
-      hobbyLabel: String,
-      hobbyPhoto: AssetInput,
-      contactMessage: String,
-      contactEmail: String,
-      contactLabel1: String,
-      contactLink1: String,
-      contactLabel2: String,
-      contactLink2: String,
-      contactLabel3: String,
-      contactLink3: String
-    ) : Home
+    updateHome(home: HomeInput): HomeUpdateResponse!
+    updateName(name: String): HomeUpdateResponse!
   }
 `;
 

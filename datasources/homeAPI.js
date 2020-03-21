@@ -1,33 +1,49 @@
-const { RESTDataSource } = require('apollo-datasource-rest');
+const { DataSource } = require('apollo-datasource');
 
-class HomeAPI extends RESTDataSource {
+const locale = "en-US";
 
-  willSendRequest(request) {
-    if (request.method === "GET") {
-      request.params.set('access_token', this.context.access_token);
-    }
-    if (request.method === "PUT") {
-      request.headers.set('Authorization', `Bearer ${ this.context.content_management_api_key }`);
-      request.headers.set('X-Contentful-Version', `Bearer ${ this.context.content_management_api_key }`);
-    }
-  }
+class HomeAPI extends DataSource {
 
-  async resolveURL(request) {
-    if (request.method === "GET" ) {
-      this.baseURL = "https://cdn.contentful.com/spaces/";
-    }
-    if (request.method === "PUT") {
-      this.baseURL = "https://api.contentful.com/spaces/";
-    }
-    return super.resolveURL(request);
+  initialize(config) {
+    this.context = config.context;
   }
 
   async getHome() {
-    return await this.context.deliveryClient.getEntry(this.context.home_entry_id).then(entry => entry.fields);
+    return await this.context.deliveryClient
+      .getEntry(this.context.home_entry_id)
+      .then(entry => entry.fields);
   }
 
-  async updateHome(home) {
-    return this.put(`${ this.context.space_id }/environments/${ this.context.environment_id }/entries/${ this.context.home_entry_id }`);
+  async updateName(object) {
+    return await this.context.managementClient.getSpace(this.context.space_id)
+      .then(space => space.getEnvironment(this.context.environment_id))
+      .then(environment => environment.getEntry(this.context.home_entry_id))
+      .then(entry => {
+        entry.fields.name[locale] = object.name;
+        return entry.update();
+      })
+      .then(entry => {
+        let success = entry.fields.name[locale] == object.name;
+        return { success, fields: HomeAPI.removeLocale(entry.fields) };
+      });
+  }
+
+  static addLocale(object) {
+    let keys = Object.keys(object);
+    let newObject = {};
+    for (let key in keys) {
+      newObject[key][locale] = object[key];
+    }
+    return newObject;
+  }
+
+  static removeLocale(object) {
+    let keys = Object.keys(object);
+    let newObject = {};
+    for (let key of keys) {
+      newObject[key] = object[key][locale];
+    }
+    return newObject;
   }
 
 }

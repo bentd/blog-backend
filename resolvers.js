@@ -4,5 +4,9 @@ module.exports = {
       dataSources.test,
     home: (_, __, { dataSources }) =>
       dataSources.homeAPI.getHome()
+  },
+  Mutation: {
+    updateName: (_, name, { dataSources }) =>
+      dataSources.homeAPI.updateName(name)
   }
 };
