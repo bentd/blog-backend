@@ -7,6 +7,8 @@ module.exports = {
   },
   Mutation: {
     updateName: (_, name, { dataSources }) =>
-      dataSources.homeAPI.updateName(name)
-  }
+      dataSources.homeAPI.updateName(name),
+    updateHome: (_, args, { dataSources }) =>
+      dataSources.homeAPI.updateHome(args)
+    }
 };

@@ -82,8 +82,8 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    updateHome(home: HomeInput): HomeUpdateResponse!
     updateName(name: String): HomeUpdateResponse!
+    updateHome(home: HomeInput): HomeUpdateResponse!
   }
 `;
 

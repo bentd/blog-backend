@@ -28,10 +28,29 @@ class HomeAPI extends DataSource {
       });
   }
 
+  async updateHome(object) {
+    return await this.context.managementClient.getSpace(this.context.space_id)
+      .then(space => space.getEnvironment(this.context.environment_id))
+      .then(environment => environment.getEntry(this.context.home_entry_id))
+      .then(entry => {
+        for (let key of Object.keys(object.home)) {
+          entry.fields[key][locale] = object.home[key];
+        }
+        return entry.update();
+      })
+      .then(entry => {
+        let success = true;
+        for (let key of Object.keys(object.home)) {
+          success = success && (entry.fields[key][locale] == object.home[key]);
+        }
+        return { success, fields: HomeAPI.removeLocale(entry.fields) };
+      });
+  }
+
   static addLocale(object) {
     let keys = Object.keys(object);
     let newObject = {};
-    for (let key in keys) {
+    for (let key of keys) {
       newObject[key][locale] = object[key];
     }
     return newObject;
