@@ -11,7 +11,10 @@ class HomeAPI extends DataSource {
   async getHome() {
     return await this.context.deliveryClient
       .getEntry(this.context.home_entry_id)
-      .then(entry => entry.fields);
+      .then(entry => {
+        console.log(entry.fields);
+        return entry.fields
+      });
   }
 
   async updateName(object) {
@@ -37,6 +40,9 @@ class HomeAPI extends DataSource {
           entry.fields[key][locale] = object.home[key];
         }
         return entry.update();
+      })
+      .then(entry => {
+        return entry.publish();
       })
       .then(entry => {
         let success = true;

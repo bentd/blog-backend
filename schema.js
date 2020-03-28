@@ -4,14 +4,37 @@ const typeDefs = gql`
 
   scalar Date
 
-  type AssetMetadata {
+  type AssetProperties {
+    createdAt: String
+    updatedAt: String
     type: String
-    linkType: String
     id: String
   }
 
+  type AssetFields {
+    title: String
+    file: File
+  }
+
+  type File {
+    contentType: String
+    fileName: String
+    url: String
+    details: FileDetails
+  }
+
+  type FileDetails {
+    image: FileDimensions
+  }
+
+  type FileDimensions {
+    width: Int
+    height: Int
+  }
+
   type Asset {
-    sys: AssetMetadata
+    sys: AssetProperties
+    fields: AssetFields
   }
 
   type Home {
@@ -20,9 +43,10 @@ const typeDefs = gql`
     name: String
     heroNouns: [String]
     greeting: String
-    role: [String]
+    role: String
+    headshotPhoto: Asset
     skills: [String]
-    university: [String]
+    university: String
     degree: String
     graduationDate: Date
     hobbyLabel: String
@@ -42,15 +66,14 @@ const typeDefs = gql`
     testHome: Home
   }
 
-
-  input AssetMetadataInput {
+  input AssetPropertiesInput {
     type: String
     linkType: String
     id: String
   }
 
   input AssetInput {
-    sys: AssetMetadataInput
+    sys: AssetPropertiesInput
   }
 
   input HomeInput {
@@ -59,9 +82,10 @@ const typeDefs = gql`
     name: String
     heroNouns: [String]
     greeting: String
-    role: [String]
+    role: String
+    headshotPhoto: AssetInput
     skills: [String]
-    university: [String]
+    university: String
     degree: String
     graduationDate: Date
     hobbyLabel: String
