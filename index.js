@@ -8,7 +8,8 @@ const contentfulDelivery = require("contentful");
 const contentfulManagement = require("contentful-management");
 
 const test = require("./test");
-const HomeAPI = require("./datasources/homeAPI");
+const InfoAPI = require("./datasources/infoAPI");
+const WorkAPI = require("./datasources/workAPI");
 
 const deliveryClient = contentfulDelivery.createClient({
   space: process.env.SPACE_ID,
@@ -29,13 +30,14 @@ const server = new ApolloServer({
     access_token: process.env.ACCESS_TOKEN,
     content_delivery_api_key: process.env.CONTENT_DELIVERY_API_KEY,
     content_management_api_key: process.env.CONTENT_MANAGEMENT_API_KEY,
-    home_entry_id: process.env.HOME_ENTRY_ID,
+    info_entry_id: process.env.INFO_ENTRY_ID,
     deliveryClient,
     managementClient
   }),
   dataSources: () => ({
     test,
-    homeAPI: new HomeAPI()
+    infoAPI: new InfoAPI(),
+    workAPI: new WorkAPI()
   })
 });
 

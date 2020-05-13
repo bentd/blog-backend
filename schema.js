@@ -4,16 +4,13 @@ const typeDefs = gql`
 
   scalar Date
 
-  type AssetProperties {
-    createdAt: String
-    updatedAt: String
-    type: String
-    id: String
+  type FileDimensions {
+    width: Int
+    height: Int
   }
 
-  type AssetFields {
-    title: String
-    file: File
+  type FileDetails {
+    image: FileDimensions
   }
 
   type File {
@@ -23,13 +20,17 @@ const typeDefs = gql`
     details: FileDetails
   }
 
-  type FileDetails {
-    image: FileDimensions
+  type AssetFields {
+    title: String
+    description: String
+    file: File
   }
 
-  type FileDimensions {
-    width: Int
-    height: Int
+  type AssetProperties {
+    createdAt: String
+    updatedAt: String
+    type: String
+    id: String
   }
 
   type Asset {
@@ -37,14 +38,14 @@ const typeDefs = gql`
     fields: AssetFields
   }
 
-  type Home {
+  type Info {
     title: String
     id: Int
     name: String
-    heroNouns: [String]
+    nouns: [String]
     greeting: String
     role: String
-    headshotPhoto: Asset
+    headshot: Asset
     skills: [String]
     university: String
     degree: String
@@ -61,9 +62,19 @@ const typeDefs = gql`
     contactLink3: String
   }
 
+  type Work {
+    title: String
+    description: String
+    gallery: [Asset]
+    link: String
+    order: Int
+    label: String
+  }
+
   type Query {
-    home: Home
-    testHome: Home
+    info: Info
+    works: [Work]
+    testInfo: Info
   }
 
   input AssetPropertiesInput {
@@ -76,20 +87,18 @@ const typeDefs = gql`
     sys: AssetPropertiesInput
   }
 
-  input HomeInput {
+  input InfoInput {
     title: String
     id: Int
     name: String
-    heroNouns: [String]
+    nouns: [String]
     greeting: String
     role: String
-    headshotPhoto: AssetInput
+    headshot: AssetInput
     skills: [String]
     university: String
     degree: String
     graduationDate: Date
-    hobbyLabel: String
-    hobbyPhoto: AssetInput
     contactMessage: String
     contactEmail: String
     contactLabel1: String
@@ -100,14 +109,14 @@ const typeDefs = gql`
     contactLink3: String
   }
 
-  type HomeUpdateResponse {
+  type InfoUpdateResponse {
     success: Boolean!
-    fields: Home
+    fields: Info
   }
 
   type Mutation {
-    updateName(name: String): HomeUpdateResponse!
-    updateHome(home: HomeInput): HomeUpdateResponse!
+    updateField(field: String): InfoUpdateResponse!
+    updateInfo(info: InfoInput): InfoUpdateResponse!
   }
 `;
 

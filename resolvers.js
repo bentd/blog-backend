@@ -1,14 +1,16 @@
 module.exports = {
   Query: {
-    testHome: (_, __, { dataSources }) =>
+    testInfo: (_, __, { dataSources }) =>
       dataSources.test,
-    home: (_, __, { dataSources }) =>
-      dataSources.homeAPI.getHome()
+    info: (_, __, { dataSources }) =>
+      dataSources.infoAPI.getInfo(),
+    works: (_, __, { dataSources }) =>
+      dataSources.workAPI.getWorks()
   },
   Mutation: {
-    updateName: (_, name, { dataSources }) =>
-      dataSources.homeAPI.updateName(name),
-    updateHome: (_, args, { dataSources }) =>
-      dataSources.homeAPI.updateHome(args)
+    updateField: (_, field, { dataSources }) =>
+      dataSources.infoAPI.updateField(field),
+    updateInfo: (_, args, { dataSources }) =>
+      dataSources.infoAPI.updateInfo(args)
     }
 };

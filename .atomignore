@@ -1,1 +1,5 @@
+.git
+.atomignore
+.gitignore
+license
 package-lock.json

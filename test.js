@@ -1,7 +1,7 @@
 module.exports = {
   "title": "Home",
   "name": "Dylan Bent",
-  "heroNouns": [
+  "nouns": [
     "student",
     "coder",
     "dreamer",

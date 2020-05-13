@@ -2,19 +2,17 @@ const { DataSource } = require('apollo-datasource');
 
 const locale = "en-US";
 
-class HomeAPI extends DataSource {
+class WorkAPI extends DataSource {
 
   initialize(config) {
     this.context = config.context;
   }
 
-  async getHome() {
+  async getWorks() {
     return await this.context.deliveryClient
-      .getEntry(this.context.home_entry_id)
-      .then(entry => {
-        console.log(entry.fields);
-        return entry.fields
-      });
+      .getEntries({ content_type: "work", order: "fields.order"})
+      .then(result => result.items)
+      .then(entries => entries.map(entry => entry.fields));
   }
 
   async updateName(object) {
@@ -73,4 +71,4 @@ class HomeAPI extends DataSource {
 
 }
 
-module.exports = HomeAPI;
+module.exports = WorkAPI;
