@@ -116,7 +116,7 @@ const typeDefs = gql`
 
   type Mutation {
     updateField(field: String): InfoUpdateResponse!
-    updateInfo(info: InfoInput): InfoUpdateResponse!
+    updateFields(info: InfoInput): InfoUpdateResponse!
   }
 `;
 

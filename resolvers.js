@@ -10,7 +10,7 @@ module.exports = {
   Mutation: {
     updateField: (_, field, { dataSources }) =>
       dataSources.infoAPI.updateField(field),
-    updateInfo: (_, args, { dataSources }) =>
-      dataSources.infoAPI.updateInfo(args)
+    updateFields: (_, args, { dataSources }) =>
+      dataSources.infoAPI.updateFields(args)
     }
 };
